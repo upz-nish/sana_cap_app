@@ -1,1 +1,3 @@
 test file added to test git commands
+
+in the line num 3 dev1 is making a change and perform add, commit and push that change.
