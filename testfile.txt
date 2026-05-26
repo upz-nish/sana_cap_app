@@ -1,3 +1,5 @@
 test file added to test git commands
 
+in the line num 3 dev1 is making a change and perform add, commit and push that change.
+
 in the same line, dev2 is adding another code line wihout knowing that dev1 is already added some change into that line.
