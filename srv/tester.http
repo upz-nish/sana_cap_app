@@ -1,0 +1,133 @@
+###service document - get all entities
+http://localhost:4004/CatalogService
+
+###service metadata document
+http://localhost:4004/CatalogService/$metadata
+
+###get all mmy employees
+http://localhost:4004/CatalogService/EmployeeSet
+
+###get one employee
+http://localhost:4004/CatalogService/EmployeeSet/02BD2137-0890-1EEA-A6C2-BB55C197E7FB
+
+###get total emp count
+http://localhost:4004/CatalogService/EmployeeSet/$count
+
+###pagination - load data chunk by chunk
+http://localhost:4004/CatalogService/EmployeeSet?$top=2&$skip=2
+
+###load selective properties
+http://localhost:4004/CatalogService/EmployeeSet?$select=nameFirst,ID,nameLast,salaryAmount
+
+###sort data
+http://localhost:4004/CatalogService/EmployeeSet?$orderby=salaryAmount desc&$top=2
+
+###filter data
+http://localhost:4004/CatalogService/EmployeeSet?$filter=sex eq 'F'
+
+###filtering based on patterns
+http://localhost:4004/CatalogService/EmployeeSet?$filter=startswith(nameFirst,'S')
+
+
+###another way of filtering based on patterns
+http://localhost:4004/CatalogService/EmployeeSet?$filter=contains(nameFirst,'S')
+
+###get all purchase orders
+http://localhost:4004/CatalogService/PurchaseOrderSet
+
+###get one purchase order
+http://localhost:4004/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2A052
+
+###get all items of a purchase order
+http://localhost:4004/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2A052/Items
+
+###get the header data and items of a purchase order in one call
+http://localhost:4004/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2A052?$expand=Items
+
+###CREATE OPERATION - create a new employee
+POST http://localhost:4004/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{
+  "nameFirst": "Christiano",
+  "nameMiddle": null,
+  "nameLast": "Ronaldo",
+  "nameInitials": null,
+  "sex": "M",
+  "language": "E",
+  "phoneNumber": null,
+  "email": "christiano.ronaldo@itelo.info",
+  "loginName": "RONALDO",
+  "Currency_code": "EUR",
+  "salaryAmount": 2500000,
+  "accountNumber": "7766554433",
+  "bankId": "12100358",
+  "bankName": "My Bank of San Francisco"
+}
+
+###MAKE A get call to verify that the employee is created READ OPERATION
+http://localhost:4004/CatalogService/EmployeeSet/4b80185a-16b5-47e3-a74a-eb50b00eef3b
+
+###UPDATE OPERATION - update the employee's salary - PATCH
+PATCH http://localhost:4004/CatalogService/EmployeeSet/4b80185a-16b5-47e3-a74a-eb50b00eef3b
+Content-Type: application/json
+
+{
+    "salaryAmount": 3000000,
+    "Currency_code": "USD"
+}
+
+###DELETE OPERATION - delete the employee
+DELETE http://localhost:4004/CatalogService/EmployeeSet/4b80185a-16b5-47e3-a74a-eb50b00eef3b
+
+###DEEP INSERT
+POST http://localhost:4004/CatalogService/PurchaseOrderSet
+Content-Type: application/json
+
+{
+  "CURRENCY_code": "EUR",
+  "GROSS_AMOUNT": 43534.96,
+  "NET_AMOUNT": 36584,
+  "TAX_AMOUNT": 6950.96,
+  "NODE_KEY": "74867AD200E41EDBA5D8B0C98DC12895",
+  "PO_ID": "300000455",
+  "PARTNER_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06885AE0052",
+  "LIFECYCLE_STATUS": "N",
+  "OVERALL_STATUS": "P",
+  "Items": [
+    {
+      "CURRENCY_code": "EUR",
+      "GROSS_AMOUNT": 1425.62,
+      "NET_AMOUNT": 1198,
+      "TAX_AMOUNT": 227.62,
+      "NODE_KEY": "74867AD200E41EDBA5D8B0CBD35B7845",
+      "PO_ITEM_POS": 10,
+      "PRODUCT_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06B26F96052"
+    },
+    {
+      "CURRENCY_code": "EUR",
+      "GROSS_AMOUNT": 117.81,
+      "NET_AMOUNT": 99,
+      "TAX_AMOUNT": 18.81,
+      "NODE_KEY": "74867AD200E41EDBA5D8B0CBD35B5691",
+      "PO_ITEM_POS": 20,
+      "PRODUCT_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06B26EE2052"
+    }
+  ]
+}
+
+###get one purchase order
+http://localhost:4004/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2A052
+
+###call action to update PO amount
+###get one purchase order
+POST http://localhost:4004/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC2A052/boost
+Content-Type: application/json
+
+{}
+
+###call function to get the largest purchase order
+http://localhost:4004/CatalogService/getLargestPurchaseOrder()
+
+###CDS Service - get all products
+http://localhost:4004/odata/v4/CDSService/ProductSet

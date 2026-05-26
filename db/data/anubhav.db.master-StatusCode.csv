@@ -1,0 +1,7 @@
+code,text
+N,New
+I,In Process
+P,Pending
+D,Delivered
+A,Approved
+X,Rejected
